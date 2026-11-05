@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "note": "Publication figures rendered at 60% (6.5 in canvas — US Letter less 1 in margins) from the matplotlib scripts in 09_Visualization. The SVGs are the files those scripts write; the captions are distilled from each script's header.",
+    "lastUpdated": "2026-09-17"
+  },
+  "groups": [
+    {
+      "id": "corpus",
+      "label": "Literature corpus",
+      "blurb": "Figures built from data.csv — the coded systematic-review corpus. Source: 09_Visualization."
+    }
+  ],
+  "figures": [
+    {
+      "id": "construction-application-phase-risk",
+      "group": "corpus",
+      "title": "Where AI is applied in construction, and what risk it is framed against",
+      "file": "figures/construction_application_phase_risk_60.svg",
+      "encodes": "Rows: construction application · Columns: project phase · Bubble area: papers coded to both · Bubble colour: dominant primary risk · Right bars: papers per application",
+      "caption": "The grid says where the work sits; the colour says what it is defended against. Safety monitoring and worker monitoring concentrate in the construction phase and are coded almost entirely to safety risk, while BIM compliance checking and design review sit in design and preconstruction under accuracy risk. Work that watches people is framed as protecting them — privacy and bias barely register as the primary risk anywhere on the grid.",
+      "source": "09_Visualization/Construction_application_phase_risk 60%.py"
+    },
+    {
+      "id": "framework-anchoring",
+      "group": "corpus",
+      "title": "What the corpus actually anchors to",
+      "file": "figures/framework_anchoring_60.svg",
+      "encodes": "Rows: regulatory framework aligned · Columns: country of study · Dot area: papers in that framework × country cell · Colour: dominant governance depth",
+      "caption": "Panel A gives total citations per framework, split by governance depth. Panel B shows where those citations come from. Grouping the rows into construction and sector instruments, AI and data-governance instruments, and papers with no explicit framework is what makes the asymmetry legible.",
+      "source": "09_Visualization/Framework_anchoring 60%.py"
+    },
+    {
+      "id": "governance-dimension-network",
+      "group": "corpus",
+      "title": "The governance-dimension co-occurrence network",
+      "file": "figures/governance_dimension_network_60.svg",
+      "encodes": "Node size: papers naming the dimension · Node colour: share where it is the primary dimension · Edge width: Jaccard association · Position: force-directed layout weighted by that association",
+      "caption": "Edges are the Jaccard index — papers naming both over papers naming either — rather than raw co-occurrence. In this corpus every possible pair of dimensions co-occurs at least twice, so the raw graph is complete and every node carries the same degree; dividing out frequency is what turns a hairball into structure.",
+      "source": "09_Visualization/Governance_dimension_network 60%.py"
+    },
+    {
+      "id": "governance-layer-upset",
+      "group": "corpus",
+      "title": "Which governance layers a paper actually covers",
+      "file": "figures/governance_layer_upset_60.svg",
+      "encodes": "Columns: observed combinations of the five governance layers · Bar height: papers in that combination · Bar colour: governance depth · Bottom strip: AI approach type · Left bars: per-layer totals",
+      "caption": "An UpSet plot: each column is one combination of layers that actually occurs, with the matrix below naming which layers are in it. Combinations that never occur get no column — the point of the form is to show which combinations exist rather than forcing a 2⁵ grid that would be mostly empty.",
+      "source": "09_Visualization/Governance_layer_upset 60%.py"
+    }
+  ]
+}

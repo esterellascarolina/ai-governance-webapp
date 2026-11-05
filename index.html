@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Governance in Construction — Systematic Review Database</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.8/babel.min.js"></script>
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    html { font-family: 'Inter', system-ui, sans-serif; }
+    .serif { font-family: 'Source Serif 4', Georgia, serif; }
+    html { scroll-behavior: smooth; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .backdrop-blur-modal { backdrop-filter: blur(4px); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade { animation: fadeIn 200ms ease-out; }
+    /* Fallback in case the Tailwind CDN build omits line-clamp. */
+    .line-clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    /* Inline matplotlib SVGs scale to their container; the viewBox keeps the geometry. */
+    .svg-fit > svg { display: block; width: 100%; height: auto; }
+  </style>
+</head>
+<body class="bg-stone-50 text-slate-900 antialiased">
+  <div id="root"></div>
+
+  <!--
+    Modular file structure. Each chart / component registers itself
+    onto window.AppCharts or window.AppComponents, and app.js reads
+    from there. Add a new chart by creating a new file in js/ and
+    listing it below. All scripts use type="text/babel" so Babel
+    transpiles JSX in the browser.
+  -->
+  <script src="./js/utils.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/chart-bar.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/chart-sankey.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/chart-heatmap.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/ai-chat.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/chart-treemap.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/paper-components.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/figure-kit.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/figures-corpus.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/figures.js" type="text/babel" data-presets="react"></script>
+  <script src="./js/app.js" type="text/babel" data-presets="react"></script>
+</body>
+</html>
