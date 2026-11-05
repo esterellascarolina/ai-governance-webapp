@@ -29,7 +29,7 @@
      Leave as '' to disable the tab's calls (the UI will still render and
      show a friendly error on submit).
      ---------------------------------------------------------------------- */
-  const GEMINI_WORKER_BASE = '';
+  const GEMINI_WORKER_BASE = 'https://electriai-proxy.chauducanh.workers.dev';
 
   /* ----- filter facets -------------------------------------------------
      One entry per filter the UI can apply. Order here drives both the

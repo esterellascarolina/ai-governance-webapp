@@ -61,28 +61,40 @@ window.AppCharts = window.AppCharts || {};
 
   // ----- worker calls ------------------------------------------------------
 
+  // Uses the shared electriai-proxy Worker, which forwards the request
+  // body to Gemini unchanged and adds the API key server-side.
   const embedQuery = async (workerBase, text) => {
-    const res = await fetch(`${workerBase}/embed`, {
+    const res = await fetch(`${workerBase}/api/embed`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, task_type: 'RETRIEVAL_QUERY' }),
+      body: JSON.stringify({
+        content: { parts: [{ text }] },
+        taskType: 'RETRIEVAL_QUERY',
+        outputDimensionality: 768,   // must match paper_embeddings.json
+      }),
     });
     if (!res.ok) throw new Error(`Embed failed: ${res.status} ${await res.text()}`);
     const data = await res.json();
-    if (!Array.isArray(data.embedding)) throw new Error('Embed response missing `embedding` array');
-    return data.embedding;
+    const values = data && data.embedding && data.embedding.values;
+    if (!Array.isArray(values)) throw new Error('Embed response missing `embedding.values` array');
+    return values;
   };
 
   const generateAnswer = async (workerBase, prompt) => {
-    const res = await fetch(`${workerBase}/generate`, {
+    const res = await fetch(`${workerBase}/api/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.3 },
+      }),
     });
     if (!res.ok) throw new Error(`Generate failed: ${res.status} ${await res.text()}`);
     const data = await res.json();
-    if (typeof data.text !== 'string') throw new Error('Generate response missing `text` string');
-    return data.text;
+    const parts = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
+    const text = parts.map(p => p.text || '').join('');
+    if (!text) throw new Error('Generate response contained no text');
+    return text;
   };
 
   // ----- prompt construction ----------------------------------------------

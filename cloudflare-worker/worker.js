@@ -4,7 +4,7 @@
      POST /generate  { prompt }           -> { text: string }
    Secrets / variables (set in Cloudflare dashboard > Worker > Settings > Variables and Secrets):
      GEMINI_API_KEY   (Secret, required)
-     ALLOWED_ORIGIN   (Text, e.g. https://your-site.pages.dev — use * only while testing)
+     ALLOWED_ORIGIN   (Text, comma-separated list, e.g. https://electriai.com,https://www.electriai.com — use * only while testing)
      GEMINI_MODEL     (Text, optional, defaults to gemini-3.8-flash)
 */
 const API = 'https://generativelanguage.googleapis.com/v1beta/models';
@@ -14,11 +14,14 @@ const MAX_PROMPT_CHARS = 60000;
 
 export default {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || '*';
+    const allowed = (env.ALLOWED_ORIGIN || '*').split(',').map(o => o.trim().replace(/\/+$/, ''));
+    const reqOrigin = request.headers.get('Origin') || '';
+    const origin = allowed.includes('*') ? '*' : (allowed.includes(reqOrigin) ? reqOrigin : allowed[0]);
     const cors = {
       'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      'Vary': 'Origin',
     };
     const json = (obj, status = 200) =>
       new Response(JSON.stringify(obj), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
